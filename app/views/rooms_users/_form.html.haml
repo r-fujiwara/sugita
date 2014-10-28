@@ -1,0 +1,16 @@
+= form_for @rooms_user do |f|
+  - if @rooms_user.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@rooms_user.errors.count, "error")} prohibited this rooms_user from being saved:"
+      %ul
+        - @rooms_user.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :room_id
+    = f.number_field :room_id
+  .field
+    = f.label :user_id
+    = f.number_field :user_id
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Room:
+  = @rooms_user.room_id
+%p
+  %b User:
+  = @rooms_user.user_id
+
+= link_to 'Edit', edit_rooms_user_path(@rooms_user)
+\|
+= link_to 'Back', rooms_users_path

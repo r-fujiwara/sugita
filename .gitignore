@@ -1,0 +1,5 @@
+/log
+/tmp
+config/database.yml
+app/daemon/rooms.yml.sample
+.DS_Store
