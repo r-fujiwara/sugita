@@ -4,7 +4,13 @@ class PostsController < ApplicationController
   def search
     Rails.logger.debug "hogehoge"
 
-    render 'index'
+    if params[:search_query].present?
+      @posts = Post.search{
+        fulltext params[:search_query]
+      }.result
+
+      render 'index'
+    end
   end
 
   # GET /posts

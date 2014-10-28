@@ -35,7 +35,9 @@ class StreamDaemon
         unless chunk.strip.empty?
           message = JSON.parse(chunk)
           p [:message, message]
-          p "user_name...#{message['username']}"
+          p "class...#{message.class}"
+          p "user_name...#{message['fromUser']['username']}"
+          p "html_content...#{message['html']}"
         end
       end
 
@@ -68,11 +70,11 @@ class StreamDaemon
 
 end
 
-class PostInjector
-  def set_record
-
+class PostInjecter
+  def set_record(message)
   end
 end
+
 
 sd = StreamDaemon.new
 #sd.run_parallel
