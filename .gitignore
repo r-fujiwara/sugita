@@ -2,4 +2,5 @@
 /tmp
 config/database.yml
 app/daemon/rooms.yml.sample
+app/daemon/rooms.yml
 .DS_Store

@@ -2,7 +2,6 @@ require 'eventmachine'
 require 'em-http'
 require 'yaml'
 require 'json'
-require 'pry'
 
 class StreamDaemon
 
@@ -10,6 +9,7 @@ class StreamDaemon
     @room_ids = load_yml.fetch("rooms").values
     @token = load_yml.fetch("token")
     @req_urls = build_urls
+    @injector = PostInjecter.new
   end
 
   def load_yml
@@ -27,7 +27,7 @@ class StreamDaemon
 
     EventMachine.run do
       puts "start single process"
-      neko_stream_url = "https://stream.gitter.im/v1/rooms/#{@room_ids.first}/chatMessages"
+      neko_stream_url = "https://stream.gitter.im/v1/rooms/#{@room_ids.last}/chatMessages"
       http = EM::HttpRequest.new(neko_stream_url, keepalive: true, connect_timeout: 0, inactivity_timeout: 0)
       req = http.get(head: {'Authorization' => "Bearer #{@token}", 'accept' => 'application/json'})
 
@@ -35,6 +35,7 @@ class StreamDaemon
         unless chunk.strip.empty?
           message = JSON.parse(chunk)
           p [:message, message]
+          p "user_name...#{message['username']}"
         end
       end
 
@@ -67,8 +68,10 @@ class StreamDaemon
 
 end
 
-class Injector
+class PostInjector
+  def set_record
 
+  end
 end
 
 sd = StreamDaemon.new

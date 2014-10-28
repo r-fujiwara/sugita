@@ -2,8 +2,9 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def search
-    binding.pry
-    Rails.logger.debug
+    Rails.logger.debug "hogehoge"
+
+    render 'index'
   end
 
   # GET /posts
