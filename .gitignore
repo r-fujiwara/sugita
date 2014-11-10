@@ -3,6 +3,5 @@
 config/database.yml
 app/daemon/rooms.yml.sample
 app/daemon/rooms.yml
-app/daemon/token.yml.sample
 app/daemon/token.yml
 .DS_Store
