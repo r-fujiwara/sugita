@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027132024) do
+ActiveRecord::Schema.define(version: 20141110232238) do
 
   create_table "posts", force: true do |t|
     t.text     "content"
     t.integer  "user_id"
-    t.integer  "post_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "gitter_id"
   end
 
   create_table "rooms", force: true do |t|
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20141027132024) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "gitter_id"
   end
 
 end
