@@ -35,7 +35,7 @@ gem 'pry-rails'
 gem 'pry-byebug'
 
 gem 'puma'
-gem 'gitter'
+gem 'ruby-gitter'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
