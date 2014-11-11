@@ -37,6 +37,9 @@ gem 'pry-byebug'
 gem 'puma'
 gem 'ruby-gitter'
 
+gem 'eventmachine'
+gem 'em-http-request'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

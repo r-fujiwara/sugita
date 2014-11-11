@@ -1,19 +1,21 @@
-require 'eventmachine'
-require 'em-http'
-require 'yaml'
-require 'json'
+require 'gitter'
 
-class StreamDaemon
+class Stream
+
+  def self.run
+    instance = new
+    instance.run_single
+  end
 
   def initialize
-    @room_ids = load_yml.fetch("rooms").values
     @token = load_yml.fetch("token")
+    @gitter = Gitter::Client.new @token
+    @room_ids = @gitter.rooms.map &:id
     @req_urls = build_urls
-    @injector = PostInjecter.new
   end
 
   def load_yml
-    yml_path = File.join Dir.pwd, 'rooms.yml'
+    yml_path = File.join Rails.root, 'app/daemon', 'token.yml'
     YAML.load_file(yml_path)
   end
 
@@ -27,13 +29,15 @@ class StreamDaemon
 
     EventMachine.run do
       puts "start single process"
-      neko_stream_url = "https://stream.gitter.im/v1/rooms/#{@room_ids.last}/chatMessages"
+      room = @gitter.rooms.select{|room| room[:name] == 'r-fujiwara/private'}.first
+      neko_stream_url = "https://stream.gitter.im/v1/rooms/#{room['id']}/chatMessages"
       http = EM::HttpRequest.new(neko_stream_url, keepalive: true, connect_timeout: 0, inactivity_timeout: 0)
       req = http.get(head: {'Authorization' => "Bearer #{@token}", 'accept' => 'application/json'})
 
       req.stream do |chunk|
         unless chunk.strip.empty?
           message = JSON.parse(chunk)
+          PostInjecter.set_record message, @token, room['id'], room['name']
           p [:message, message]
           p "class...#{message.class}"
           p "user_name...#{message['fromUser']['username']}"
@@ -70,12 +74,37 @@ class StreamDaemon
 
 end
 
-class PostInjecter
-  def set_record(message)
+module PostInjecter
+  module_function
+
+  def set_record(message, token, room_id, room_name)
+    message.deep_symbolize_keys!
+    user_id = user message
+    room room_name, user_id
+    post message, user_id
   end
+
+  def user(message)
+    id = message[:fromUser][:id]
+    name = message[:fromUser][:username]
+    user = User.find_or_create_by name: name, gitter_id: id
+    user.id
+  end
+
+  def post(message, user_id, room_id)
+    gitter_id = message[:id]
+    raw_html = message[:html]
+    Post.create user_id: user_id, gitter_id: gitter_id, content: raw_html, room_id: room_id
+  end
+
+  def room(room_name, user_id)
+    room = Room.find_or_create_by name: room_name
+    RoomsUser.find_or_create_by room_id: room.id, user_id: user_id
+  end
+
 end
 
 
-sd = StreamDaemon.new
+#sd = StreamDaemon.new
 #sd.run_parallel
-sd.run_single
+#sd.run_single

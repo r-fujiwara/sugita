@@ -27,6 +27,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    addressable (2.3.6)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
     byebug (3.5.1)
@@ -42,8 +43,18 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     columnize (0.8.9)
+    cookiejar (0.3.2)
     debugger-linecache (1.2.0)
+    em-http-request (1.1.2)
+      addressable (>= 2.3.4)
+      cookiejar
+      em-socksify (>= 0.3)
+      eventmachine (>= 1.0.3)
+      http_parser.rb (>= 0.6.0)
+    em-socksify (0.3.0)
+      eventmachine (>= 1.0.0.beta.4)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     execjs (2.2.2)
     haml (4.0.5)
       tilt
@@ -54,6 +65,7 @@ GEM
       railties (>= 4.0.1)
     hashie (3.3.1)
     hike (1.2.3)
+    http_parser.rb (0.6.0)
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -163,6 +175,8 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  em-http-request
+  eventmachine
   haml-rails
   jbuilder (~> 2.0)
   jquery-rails
