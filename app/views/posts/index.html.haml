@@ -7,14 +7,17 @@
     %th
     %th
 
+  -# @posts.each do |post|
+    -# %tr
+      -# %td= link_to "#{post.content}", posts_result_path(post)
+
   - @posts.each do |post|
-    %tr
-      %td= link_to "#{post.content}", posts_result_path(post)
-      - # %td= post.user_id
-      - # %td= link_to 'Show', post
-      - # %td= link_to 'Edit', edit_post_path(post)
-      - # %td= link_to 'Destroy', post, :method => :delete, :data => { :confirm => 'Are you sure?' }
+    - j = post[:id].to_s.to_sym
+    - if !@results[j].nil? && @results[j][0]=="content"
+      %tr
+        %td= link_to "#{@results[j][1].html_safe}", posts_result_path(post)
+    - else
+      - f[:content]
 
 %br
 
-= link_to 'New Post', new_post_path

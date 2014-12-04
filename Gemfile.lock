@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/kristenmills/ruby-gitter.git
+  revision: 10f7604b588be9c99212b24304c5350c3833fc98
+  branch: develop
+  specs:
+    ruby-gitter (0.0.1)
+      hashie
+      httparty
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -63,7 +72,7 @@ GEM
       activesupport (>= 4.0.1)
       haml (>= 3.1, < 5.0)
       railties (>= 4.0.1)
-    hashie (3.3.1)
+    hashie (3.3.2)
     hike (1.2.3)
     http_parser.rb (0.6.0)
     httparty (0.13.3)
@@ -124,9 +133,6 @@ GEM
       json (~> 1.4)
     rsolr (1.0.10)
       builder (>= 2.1.2)
-    ruby-gitter (0.0.1)
-      hashie
-      httparty
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -185,7 +191,7 @@ DEPENDENCIES
   pry-rails
   puma
   rails (= 4.1.4)
-  ruby-gitter
+  ruby-gitter!
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   spring

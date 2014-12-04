@@ -3,7 +3,7 @@ class Post < ActiveRecord::Base
   belongs_to :rooms
 
   searchable do
-    text :content
+    text :content, :stored => true
   end
 
   def around(number)

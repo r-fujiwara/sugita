@@ -2,10 +2,28 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy, :result]
 
   def search
-    if params[:search_query].present?
+    if (words = params[:search_query]).present?
+      # check blank hankaku or zenkaku
+      # if words =~ /^(.+?)\p{blank}+(.+)$/
+
       @posts = Post.search{
-        fulltext params[:search_query]
+        fulltext words
       }.results.sort_by{|post| post.created_at}
+
+      search = Post.search do
+        fulltext words, :highlight => true
+      end
+
+      @posts = search.results.sort_by{|post| post.created_at}
+
+      @results = Hash.new
+      search.hits.each do |hit|
+        hit.highlights(:content).each do |highlight|
+          id = hit.primary_key.to_s.to_sym
+          fr = highlight.format { |word| "<hit>#{word}" }
+          @results.merge!(id => ["content",fr])
+        end
+      end
 
       render 'index'
     end
