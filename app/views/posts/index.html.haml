@@ -2,7 +2,6 @@
 
 %table
   %tr
-    %th Content
     %th
     %th
     %th
@@ -15,7 +14,9 @@
     - j = post[:id].to_s.to_sym
     - if !@results[j].nil? && @results[j][0]=="content"
       %tr
-        %td= link_to "#{@results[j][1].html_safe}", posts_result_path(post)
+        %td
+          %img{src: "#{avatar_from(user_id: post.user_id)}", tooltip: "#{user_attrs(user_id: post.user_id).name}"}
+          = link_to "#{@results[j][1].html_safe}", posts_result_path(post)
     - else
       - f[:content]
 
