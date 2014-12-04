@@ -1,28 +1,33 @@
-== README
+**setup token files**
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```
+$ cp token.yml.sample token.yml
+```
 
-Things you may want to cover:
+- write token file some token
 
-* Ruby version
+```
+$ vim token.yml
+```
 
-* System dependencies
+**boot observe daemon process**
 
-* Configuration
+```
+$ bundle exec rails runner Stream.run
+```
 
-* Database creation
+**somehow gitter api client wrong**
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+$ git clone git@github.com:kristenmills/ruby-gitter.git
+$ cd ruby-gitter
+$ rake install
+```
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+**Activate Solr**
+
+```
+$ rails generate sunspot_rails:install
+$ bundle exec rake sunspot:solr:run
+```
