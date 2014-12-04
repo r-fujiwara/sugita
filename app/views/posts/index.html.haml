@@ -1,22 +1,19 @@
-%h1 Listing posts
+%h1 results
 
 %table
   %tr
     %th Content
-    %th User
-    %th Post
     %th
     %th
     %th
 
   - @posts.each do |post|
     %tr
-      %td= post.content
-      %td= post.user_id
-      %td= post.post_id
-      %td= link_to 'Show', post
-      %td= link_to 'Edit', edit_post_path(post)
-      %td= link_to 'Destroy', post, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= link_to "#{post.content}", posts_result_path(post)
+      - # %td= post.user_id
+      - # %td= link_to 'Show', post
+      - # %td= link_to 'Edit', edit_post_path(post)
+      - # %td= link_to 'Destroy', post, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 

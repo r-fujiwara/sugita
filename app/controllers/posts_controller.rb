@@ -1,16 +1,19 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :result]
 
   def search
-    Rails.logger.debug "hogehoge"
-
     if params[:search_query].present?
       @posts = Post.search{
         fulltext params[:search_query]
-      }.result
+      }.results.sort_by{|post| post.created_at}
 
       render 'index'
     end
+  end
+
+  def result
+    @posts = @post.around(4)
+    @current_id = @post.id
   end
 
   # GET /posts

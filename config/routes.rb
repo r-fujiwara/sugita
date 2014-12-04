@@ -2,7 +2,8 @@ Rails.application.routes.draw do
 
   root 'main#index'
 
-  post '/posts/search', to: "posts#search"
+  post '/posts/search', to: "posts#search", as: "posts_search"
+  get  '/posts/result/:id', to: "posts#result", as: "posts_result"
 
   resources :rooms_users
 
